@@ -22,3 +22,11 @@ async def get_book(book_id: int):
 @app.post('/create_book')
 async def create_book(new_book=Body()):
     books.append(new_book)
+    
+@app.put('/update_book')
+async def update_book(new_book=Body()):
+    for i in range(len(books)):
+        if books[i].get('title').casefold() == new_book.get('title').casefold():
+            books[i]=new_book
+            break
+        
