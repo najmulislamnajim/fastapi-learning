@@ -36,3 +36,15 @@ async def read_all_books():
 @app.post('/create-book/')
 async def create_book(new_book = Body()):
     BOOKS.append(new_book)
+    
+
+@app.put('/update-book/{book_id}')
+async def update_book(book_id: int, updated_book: BookRequests):
+    for idx, book in enumerate(BOOKS):
+        if book.id == book_id:
+            BOOKS[idx].title = updated_book.title
+            BOOKS[idx].author = updated_book.author
+            BOOKS[idx].description = updated_book.description
+            BOOKS[idx].rating = updated_book.rating
+            return {"message": "Book updated successfully"}
+    return {"error": "Book not found"}
